@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 運用ルール
 
-## Getting Started
+## 1.ブランチ運用
 
-First, run the development server:
+主要ブランチ
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- main
+- dev
+
+基本的に dev からブランチを切っていく。
+命名規則
+
+### 画面系の開発
+
+画面の見た目や挙動に関する実装は以下のフォーマットでブランチを切る
+
+```
+feature/ui_{画面名}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 処理系の開発
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+DB への格納処理や、ボタンを押下で呼び出される処理などは以下のフォーマットでブランチを切る
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+feature/repository_{処理名}
+```
 
-## Learn More
+### バグ修正
 
-To learn more about Next.js, take a look at the following resources:
+バグを検知した場合、issue を起票し、その番号をブランチ名に入れてブランチを切る
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+bug/issue_#{番号}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 2.Next.js のページ作成
 
-## Deploy on Vercel
+ページを実装する際は、以下の宣言方法でページを実装する
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+export default function Home() {
+  return (
+    <div>
+      <h1>Hello World!</h1>
+    </div>
+  )
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 3.命名規則
+
+変数、関数共通して以下の略語を使用すること
+
+- 登録処理(reg)
+- 更新処理(upd)
+- 削除処理(del)
+- 単一取得処理(get\_{処理名}\_ByUniqueKey)
+- 複数取得処理(gets)
+- 検索処理(find)
+
+### (1).変数
+
+変数を宣言する際、先頭文字は型を付けて宣言すること
+
+```
+// String型の場合
+const strWord: String = ''
+
+// int型の場合
+const intNumber: int = 0
+
+// Object型の場合
+const recObject: ObjectA = new ObjectA()
+
+// List型の場合
+const lstArray: String[] = []
+```
+
+### (2).関数
