@@ -3,12 +3,18 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
+import { auth } from '@/infrastructure/firestore/config'
+
 export default function Nav() {
   const router = useRouter()
-  // const user = auth.currentUser
+  const user = auth.currentUser
 
   React.useEffect(() => {
-    router.replace('/signin')
+    if (!user) {
+      router.push('/signin')
+    } else {
+      router.push('/home')
+    }
   }, [])
 
   return null

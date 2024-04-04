@@ -1,4 +1,5 @@
 import { ChakraProvider } from '@/design'
+import { AuthContextProvider } from '@/providers/auth_context'
 
 import type { Metadata } from 'next'
 
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang='ja'>
       <body>
-        <ChakraProvider cssVarsRoot={undefined}>{children}</ChakraProvider>
+        <ChakraProvider cssVarsRoot={undefined}>
+          <AuthContextProvider>{children}</AuthContextProvider>
+        </ChakraProvider>
       </body>
     </html>
   )
