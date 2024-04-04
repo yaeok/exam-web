@@ -1,5 +1,4 @@
 'use client'
-import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,9 +17,8 @@ import {
   useToast,
   VStack,
 } from '@/design'
-
-// import { AuthRepository } from '@/infrastructure/repository/auth/auth_repository'
-// import { SignInWithEmailUseCase } from '@/use_case/auth/sign_in_with_email'
+import { AuthRepository } from '@/infrastructure/repository/auth_repository'
+import { SignInWithEmailUseCase } from '@/use_case/auth/sign_in_with_email'
 
 // フォームで使用する変数の型を定義
 type FormInputs = {
@@ -42,22 +40,22 @@ export default function SigninPage() {
 
   const onSubmit = handleSubmit(async (data: FormInputs) => {
     setLoading(true)
-    // const authRepository = new AuthRepository()
-    // try {
-    //   const result = await new SignInWithEmailUseCase(authRepository).execute({
-    //     email: data.email,
-    //     password: data.password,
-    //   })
-    //   if (result) {
-    //     router.push('/book')
-    //   }
-    // } catch (e) {
-    //   if (e instanceof String) {
-    //     toast({ title: e, status: 'error' })
-    //   }
-    // } finally {
-    //   setLoading(false)
-    // }
+    const authRepository = new AuthRepository()
+    try {
+      const result = await new SignInWithEmailUseCase(authRepository).execute({
+        email: data.email,
+        password: data.password,
+      })
+      if (result) {
+        router.push('/book')
+      }
+    } catch (e) {
+      if (e instanceof String) {
+        toast({ title: e, status: 'error' })
+      }
+    } finally {
+      setLoading(false)
+    }
   })
   return loading ? (
     <Loading />
