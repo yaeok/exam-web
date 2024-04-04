@@ -1,7 +1,15 @@
-export default function Home() {
-  return (
-    <div>
-      <h1>Hello World!</h1>
-    </div>
-  )
+'use client'
+
+import { useRouter } from 'next/navigation'
+import React from 'react'
+
+export default function Nav() {
+  const router = useRouter()
+  // const user = auth.currentUser
+
+  React.useEffect(() => {
+    router.replace('/signin')
+  }, [])
+
+  return null
 }
