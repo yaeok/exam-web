@@ -1,3 +1,5 @@
+import { ChakraProvider } from '@/design'
+
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -12,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ja'>
-      <body>{children}</body>
+      <body>
+        <ChakraProvider cssVarsRoot={undefined}>{children}</ChakraProvider>
+      </body>
     </html>
   )
 }
