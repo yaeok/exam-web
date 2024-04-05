@@ -1,4 +1,4 @@
-import { AuthRepository } from '@/infrastructure/repository/auth/auth_repository'
+import { AuthRepository } from '@/infrastructure/repository/auth_repository'
 import { UseCase, UseCaseInput, UseCaseOutput } from '@/use_case/use_case'
 
 interface SignOutUseCaseInput extends UseCaseInput {}

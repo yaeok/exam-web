@@ -1,4 +1,8 @@
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+} from 'firebase/auth'
 
 import { IAuthRepository } from '@/domain/auth/repository/auth_repository'
 import { auth } from '@/infrastructure/firestore/config'
@@ -20,22 +24,29 @@ export class AuthRepository implements IAuthRepository {
     password: string
   }): Promise<boolean> {
     const { email, password } = args
-    return new Promise((resolve, reject) => {
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          resolve(true)
-        })
-        .catch((error) => {
-          switch (error.code) {
-            case 'auth/user-not-found':
-              return 'ユーザーが見つかりません'
-            case 'auth/wrong-password':
-              return 'パスワードが間違っています'
-            default:
-              return 'エラーが発生しました'
-          }
-        })
-    })
+    const userCredential: UserCredential = await new Promise<UserCredential>(
+      (resolve, reject) => {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((response: UserCredential) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            switch (error.code) {
+              case 'auth/user-not-found':
+                return 'ユーザーが見つかりません'
+              case 'auth/wrong-password':
+                return 'パスワードが間違っています'
+              default:
+                return 'エラーが発生しました'
+            }
+          })
+      }
+    )
+    if (userCredential.user.emailVerified) {
+      return true
+    } else {
+      return false
+    }
   }
 
   async signOut(): Promise<boolean> {

@@ -47,7 +47,7 @@ export default function SigninPage() {
         password: data.password,
       })
       if (result) {
-        router.push('/book')
+        router.push('/home')
       }
     } catch (e) {
       if (e instanceof String) {
