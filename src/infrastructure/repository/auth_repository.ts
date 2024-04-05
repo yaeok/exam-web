@@ -4,7 +4,7 @@ import {
   UserCredential,
 } from 'firebase/auth'
 
-import { IAuthRepository } from '@/domain/auth/repository/auth_repository'
+import { AuthRepository } from '@/domain/auth/repository/auth_repository'
 import { auth } from '@/infrastructure/firestore/config'
 
 /** firebaseのエラー */
@@ -18,7 +18,7 @@ const isFirebaseError = (e: Error): e is FirebaseError => {
   return 'code' in e && 'message' in e
 }
 
-export class AuthRepository implements IAuthRepository {
+export class IAuthRepository implements AuthRepository {
   async signInWithEmail(args: {
     email: string
     password: string

@@ -17,7 +17,7 @@ import {
   useToast,
   VStack,
 } from '@/design'
-import { AuthRepository } from '@/infrastructure/repository/auth_repository'
+import { IAuthRepository } from '@/infrastructure/repository/auth_repository'
 import { SignInWithEmailUseCase } from '@/use_case/auth/sign_in_with_email'
 
 // フォームで使用する変数の型を定義
@@ -40,7 +40,7 @@ export default function SigninPage() {
 
   const onSubmit = handleSubmit(async (data: FormInputs) => {
     setLoading(true)
-    const authRepository = new AuthRepository()
+    const authRepository = new IAuthRepository()
     try {
       const result = await new SignInWithEmailUseCase(authRepository).execute({
         email: data.email,

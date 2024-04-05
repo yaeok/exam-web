@@ -7,11 +7,11 @@ import {
 } from 'firebase/firestore'
 
 import { User } from '@/domain/user/entity/user_entity'
-import { IUserRepository } from '@/domain/user/repository/user_repository'
+import { UserRepository } from '@/domain/user/repository/user_repository'
 import { UserDTO } from '@/infrastructure/dto/user/user_dto'
 import { db } from '@/infrastructure/firestore/config'
 
-export class UserRepository implements IUserRepository {
+export class IUserRepository implements UserRepository {
   async getUserById(args: { uid: string }) {
     const docRef = doc(db, 'users', args.uid)
     return new Promise<User>((resolve, reject) => {
@@ -60,7 +60,6 @@ export class UserRepository implements IUserRepository {
     const docRef = doc(db, 'users', args.id)
     return new Promise<boolean>((resolve, reject) => {
       updateDoc(docRef, {
-        isActive: false,
         deletedAt: new Date(),
       })
         .then(() => {
