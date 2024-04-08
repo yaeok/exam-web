@@ -18,7 +18,7 @@ import {
   VStack,
 } from '@/design'
 import { IAuthRepository } from '@/infrastructure/repository/auth_repository'
-import { SignInWithEmailUseCase } from '@/use_case/auth/sign_in_with_email'
+import { SignInWithEmailUseCase } from '@/use_case/auth/sign_in_with_email_use_case'
 
 // フォームで使用する変数の型を定義
 type FormInputs = {
@@ -27,7 +27,7 @@ type FormInputs = {
   confirm: string
 }
 
-export default function SigninPage() {
+export default function SigninView() {
   const toast = useToast()
   const router = useRouter()
   const {

@@ -1,6 +1,6 @@
 import { DocumentData } from 'firebase/firestore'
 
-import { User } from '@/domain/user/entity/user_entity'
+import { User } from '@/domain/entity/user_entity'
 import { DataTransferObject } from '@/infrastructure/dto/dto'
 
 export class UserDTO implements DataTransferObject {
