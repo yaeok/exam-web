@@ -10,9 +10,9 @@ import React, {
 } from 'react'
 
 import Loading from '@/components/widgets/loading.component'
-import { User } from '@/domain/user/entity/user_entity'
+import { User } from '@/domain/entity/user_entity'
 import { auth } from '@/infrastructure/firestore/config'
-import { UserRepository } from '@/infrastructure/repository/user_repository'
+import { IUserRepository } from '@/infrastructure/repository/user_repository'
 
 export const AuthContext = createContext({})
 
@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const userRepository = new UserRepository()
+    const userRepository = new IUserRepository()
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         userRepository.getUserById({ uid: user.uid }).then((user) => {

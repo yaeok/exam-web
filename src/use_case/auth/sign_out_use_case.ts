@@ -1,4 +1,4 @@
-import { AuthRepository } from '@/infrastructure/repository/auth/auth_repository'
+import { IAuthRepository } from '@/infrastructure/repository/auth_repository'
 import { UseCase, UseCaseInput, UseCaseOutput } from '@/use_case/use_case'
 
 interface SignOutUseCaseInput extends UseCaseInput {}
@@ -10,11 +10,11 @@ interface SignOutCaseOutput extends UseCaseOutput {
 export class SignOutUseCase
   implements UseCase<SignOutUseCaseInput, Promise<SignOutCaseOutput>>
 {
-  constructor(authRepository: AuthRepository) {
+  constructor(authRepository: IAuthRepository) {
     this.authRepository = authRepository
   }
 
-  private authRepository: AuthRepository
+  private authRepository: IAuthRepository
 
   async execute(): Promise<SignOutCaseOutput> {
     const result = await this.authRepository.signOut()

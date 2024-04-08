@@ -1,9 +1,15 @@
 export class User {
+  /** ユーザId */
   uid: string
+  /** ユーザ名 */
   username: string
+  /** メールアドレス */
   email: string
+  /** 作成日 */
   createdAt: Date
+  /** 更新日 */
   updatedAt: Date
+  /** 削除日 */
   deletedAt: Date | null
   constructor(args: {
     uid: string
