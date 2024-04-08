@@ -1,5 +1,6 @@
 import { Exam } from '@/domain/entity/exam_entity'
 import { ExamRepository } from '@/domain/repository/exam_repository'
+import { ExamDTO } from '@/infrastructure/dto/exam_dto.ts/exam_dto'
 import { db, master } from '@/infrastructure/firestore/config'
 import {
   addDoc,
@@ -11,8 +12,6 @@ import {
   updateDoc,
   where,
 } from '@firebase/firestore'
-
-import { ExamDTO } from '../dto/exam_dto.ts/exam_dto'
 
 export class IExamRepository implements ExamRepository {
   getExamById(args: { eid: string }): Promise<Exam | null> {
