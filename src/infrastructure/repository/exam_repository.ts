@@ -1,7 +1,8 @@
 import { Exam } from '@/domain/entity/exam_entity'
 import { ExamRepository } from '@/domain/repository/exam_repository'
-import { ExamDTO } from '@/infrastructure/dto/exam_dto.ts/exam_dto'
+import { ExamDTO } from '@/infrastructure/dto/exam/exam_dto'
 import { db, master } from '@/infrastructure/firestore/config'
+import { ExamMapper } from '@/infrastructure/mapper/exam_mapper'
 import {
   addDoc,
   collection,
@@ -21,7 +22,7 @@ export class IExamRepository implements ExamRepository {
         .then((doc) => {
           if (doc.exists()) {
             const examData = doc.data()
-            const exam = ExamDTO.fromDoc(examData)
+            const exam = ExamMapper.toDomain(ExamDTO.fromDoc(examData))
             resolve(exam)
           } else {
             resolve(null)
@@ -41,7 +42,7 @@ export class IExamRepository implements ExamRepository {
           const exams: Exam[] = []
           snapshot.forEach((doc) => {
             const examData = doc.data()
-            const exam = ExamDTO.fromDoc(examData)
+            const exam = ExamMapper.toDomain(ExamDTO.fromDoc(examData))
             exams.push(exam)
             exams.push(exam)
             exams.push(exam)
