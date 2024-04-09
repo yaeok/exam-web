@@ -7,9 +7,11 @@ import { Exam } from '@/domain/entity/exam_entity'
 import { auth } from '@/infrastructure/firestore/config'
 import { IExamRepository } from '@/infrastructure/repository/exam_repository'
 import { GetAllExamUseCase } from '@/use_case/exam/get_all_exam_use_case'
-import { VStack } from '@chakra-ui/react'
+import { Button, Grid, HStack, Spacer, VStack } from '@/design'
+import { useRouter } from 'next/navigation'
 
 export default function HomeView() {
+  const router = useRouter()
   const [lstExamState, setLstExamState] = React.useState<Exam[]>([])
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   React.useEffect(() => {
@@ -26,16 +28,21 @@ export default function HomeView() {
   return isLoading ? (
     <Loading />
   ) : (
-    <VStack paddingY='8px'>
-      {lstExamState.map((exam) => (
-        <div key={exam.eid}>
+    <VStack width='100%' paddingY='8px'>
+      <HStack width='100%' justifyContent='space-between'>
+        <Spacer />
+        <Button onClick={() => router.push('/home/post')}>新規登録</Button>
+      </HStack>
+      <Grid templateColumns='repeat(3, 1fr)' gap='8px'>
+        {lstExamState.map((exam) => (
           <ExamCard
+            key={exam.eid}
             eid={exam.eid}
             title={exam.title}
             description={exam.description}
           />
-        </div>
-      ))}
+        ))}
+      </Grid>
     </VStack>
   )
 }

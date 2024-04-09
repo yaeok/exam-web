@@ -1,12 +1,20 @@
 'use client'
 import React from 'react'
 
-import { Button, HStack, Input, Text, VStack } from '@/design'
+import { Button, HStack, Input, Spacer, Text, VStack } from '@/design'
 import { User } from '@/domain/entity/user_entity'
 import { IUserRepository } from '@/infrastructure/repository/user_repository'
 import { SearchUserByEmailUseCase } from '@/use_case/user/search_user_by_email_use_case'
+import { useRouter } from 'next/navigation'
 
-export default function SearchView() {
+type SearchViewProps = {
+  params: {
+    id: string
+  }
+}
+
+export default function SearchView(props: SearchViewProps) {
+  const router = useRouter()
   const [searchWord, setSearchWord] = React.useState<string>('')
   const [userState, setUserState] = React.useState<User | null>(null)
   const onClickSearchBtn = async (word: string) => {
@@ -19,6 +27,10 @@ export default function SearchView() {
   return (
     <div>
       <VStack paddingY='12px'>
+        <HStack width='100%' justifyContent='space-between'>
+          <Button onClick={router.back}>戻る</Button>
+          <Spacer />
+        </HStack>
         <Text color='gray' fontSize='12px'>
           共有したいユーザのメールアドレスを入力してください
         </Text>
