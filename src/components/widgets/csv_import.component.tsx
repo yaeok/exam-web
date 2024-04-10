@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { readString } from 'react-papaparse'
 
-import { Box, Table, Tbody, Text, Th } from '@/design'
+import { Box, Table, Tbody, Td, Text, Th, Thead, Tr } from '@/design'
 import { Question, Select } from '@/domain/entity/question_entity'
 
 type CsvImportProps = {
@@ -36,14 +36,14 @@ export default function CsvImport() {
     if (typeof binaryStr !== 'string') return
     readString(binaryStr, {
       worker: true,
-      complete: async (results: any) => {
-        // FirestoreにCSVデータを保存する処理 (results.dataは配列になったCSVデータ)
+      complete: (results: any) => {
         const questions: Question[] = []
-        for (let i = 1; i < results.data.length; i++) {
+        console.log(results.data.length)
+        for (let i: number = 1; i < results.data.length - 1; i++) {
           const data = results.data[i]
-
+          console.log(data)
           const lstSelect: Select[] = []
-          for (let j = 2; j < j + questionIndex; j++) {
+          for (let j: number = 3; j < 3 + questionIndex; j++) {
             if (data[j] === '') break
 
             let index: number = 0
@@ -57,9 +57,9 @@ export default function CsvImport() {
 
           const question: Question = new Question({
             qid: '',
-            question: data[0],
+            question: data[1],
             lstSelect: lstSelect,
-            answer: parseInt(data[1]),
+            answer: parseInt(data[2]),
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null,
@@ -88,20 +88,30 @@ export default function CsvImport() {
       )}
       {lstQuestionState.length > 0 ? (
         <Table>
+          <Thead>
+            <Tr>
+              <Th>問題</Th>
+              <Th>選択肢</Th>
+              <Th>正答</Th>
+            </Tr>
+          </Thead>
           <Tbody>
-            <Th>問題</Th>
-            <Th>選択肢</Th>
-            <Th>正答</Th>
             {lstQuestionState.map((question, index) => (
-              <tr key={index}>
-                <Text>{question.question}</Text>
-                <Text>
-                  {question.lstSelect.map((select, index) => (
-                    <Text key={index}>{select.label}</Text>
-                  ))}
-                </Text>
-                <Text>{question.answer}</Text>
-              </tr>
+              <Tr key={index}>
+                <Td>
+                  <Text>{question.question}</Text>
+                </Td>
+                <Td>
+                  <Text>
+                    {question.lstSelect.map((select, index) => (
+                      <Text key={index}>{select.label}</Text>
+                    ))}
+                  </Text>
+                </Td>
+                <Td>
+                  <Text>{question.answer}</Text>
+                </Td>
+              </Tr>
             ))}
           </Tbody>
         </Table>
