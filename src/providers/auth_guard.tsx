@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
 
-import Loading from '@/components/widgets/loading.component'
+import Loading from '@/components/common/loading'
 import { auth } from '@/infrastructure/firestore/config'
 
 type Props = {

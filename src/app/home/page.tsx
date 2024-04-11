@@ -1,14 +1,14 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
-import ExamCard from '@/components/widgets/exam_card.component'
-import Loading from '@/components/widgets/loading.component'
+import Loading from '@/components/common/loading'
+import ExamCard from '@/components/home_view/exam_card'
+import { Button, Grid, HStack, Spacer, VStack } from '@/design'
 import { Exam } from '@/domain/entity/exam_entity'
 import { auth } from '@/infrastructure/firestore/config'
 import { IExamRepository } from '@/infrastructure/repository/exam_repository'
 import { GetAllExamUseCase } from '@/use_case/exam/get_all_exam_use_case'
-import { Button, Grid, HStack, Spacer, VStack } from '@/design'
-import { useRouter } from 'next/navigation'
 
 export default function HomeView() {
   const router = useRouter()

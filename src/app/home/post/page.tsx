@@ -1,10 +1,9 @@
 'use client'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
-import CsvImport from '@/components/widgets/csv_import.component'
-import { Button, HStack, Spacer, VStack } from '@/design'
-import router from 'next/router'
-import { useRouter } from 'next/navigation'
+import CsvImport from '@/components/post_view/csv_import';
+import { Button, HStack, Spacer, VStack } from '@/design';
 
 export default function PostView() {
   const router = useRouter()

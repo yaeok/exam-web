@@ -43,6 +43,7 @@ export default function CsvImport() {
           const data = results.data[i]
           console.log(data)
           const lstSelect: Select[] = []
+          // 選択肢は3列目から始まるため、3列目からループを回す
           for (let j: number = 3; j < 3 + questionIndex; j++) {
             if (data[j] === '') break
 
@@ -91,7 +92,12 @@ export default function CsvImport() {
           <Thead>
             <Tr>
               <Th>問題</Th>
-              <Th>選択肢</Th>
+              {(function () {
+                const list = []
+                for (let i = 0; i < questionIndex; i++) {
+                  return <Th>選択肢{i}</Th>
+                }
+              })()}
               <Th>正答</Th>
             </Tr>
           </Thead>
