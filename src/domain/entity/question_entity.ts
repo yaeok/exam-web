@@ -4,7 +4,7 @@ export class Question {
   /** 問題文 */
   question: string
   /** 選択肢 */
-  lstSelect: Select[]
+  lstSelect: string[]
   /** 正答 */
   answer: number
   /** 作成日 */
@@ -16,7 +16,7 @@ export class Question {
   constructor(args: {
     qid: string
     question: string
-    lstSelect: Select[]
+    lstSelect: string[]
     answer: number
     createdAt: Date
     updatedAt: Date
@@ -29,15 +29,5 @@ export class Question {
     this.createdAt = args.createdAt
     this.updatedAt = args.updatedAt
     this.deletedAt = args.deletedAt
-  }
-}
-
-export class Select {
-  value: number
-  label: string
-
-  constructor(args: { value: number; label: string }) {
-    this.value = args.value
-    this.label = args.label
   }
 }

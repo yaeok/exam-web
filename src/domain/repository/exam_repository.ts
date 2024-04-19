@@ -1,9 +1,9 @@
 import { Exam } from '@/domain/entity/exam_entity'
 
 export interface ExamRepository {
-  getExamById(args: { eid: string }): Promise<Exam | null>
+  getExamByEid(args: { eid: string }): Promise<Exam | null>
   getAllExams(args: { uid: string }): Promise<Exam[]>
-  createExam(args: { exam: Exam }): Promise<Exam>
-  updateExam(args: { exam: Exam }): Promise<Exam>
-  deleteExam(args: { eid: string }): Promise<boolean>
+  regExam(args: { exam: Exam }): Promise<Exam>
+  updExam(args: { exam: Exam }): Promise<Exam>
+  delExam(args: { eid: string }): Promise<boolean>
 }

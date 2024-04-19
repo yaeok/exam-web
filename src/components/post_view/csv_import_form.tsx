@@ -2,16 +2,14 @@ import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { readString } from 'react-papaparse'
 
-import { Box, Table, Tbody, Td, Text, Th, Thead, Tr } from '@/design'
-import { Question, Select } from '@/domain/entity/question_entity'
+import { Text, VStack } from '@/design'
+import { Question } from '@/domain/entity/question_entity'
 
 type CsvImportProps = {
-  eid: string
-  uid: string
+  roadCsv: (value: Question[]) => void
 }
 
-export default function CsvImport() {
-  const [lstQuestionState, setlstQuestionState] = useState<Question[]>([])
+export default function CsvImportForm(props: CsvImportProps) {
   const questionIndex: number = 4
   const [isLoading, setIsLoading] = useState<boolean>(false)
   // CSVをドロップしたときに呼び出される処理
@@ -42,18 +40,11 @@ export default function CsvImport() {
         for (let i: number = 1; i < results.data.length - 1; i++) {
           const data = results.data[i]
           console.log(data)
-          const lstSelect: Select[] = []
+          const lstSelect: string[] = []
           // 選択肢は3列目から始まるため、3列目からループを回す
           for (let j: number = 3; j < 3 + questionIndex; j++) {
             if (data[j] === '') break
-
-            let index: number = 0
-            const select: Select = new Select({
-              value: index,
-              label: data[j],
-            })
-            lstSelect.push(select)
-            index++
+            lstSelect.push(data[j])
           }
 
           const question: Question = new Question({
@@ -67,7 +58,7 @@ export default function CsvImport() {
           })
           questions.push(question)
         }
-        setlstQuestionState(questions)
+        props.roadCsv(questions)
       },
     })
   }
@@ -82,46 +73,11 @@ export default function CsvImport() {
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
-        <Box border='dashed 1px black' rounded='base'>
-          ファイルをここにドラッグアンドドロップするか、
-          クリックしてファイルを選択してください
-        </Box>
+        <VStack width='100%' border='dashed 1px' borderRadius='15' padding='10'>
+          <Text>ファイルをここにドラッグアンドドロップするか、</Text>
+          <Text>クリックしてファイルを選択してください</Text>
+        </VStack>
       )}
-      {lstQuestionState.length > 0 ? (
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>問題</Th>
-              {(function () {
-                const list = []
-                for (let i = 0; i < questionIndex; i++) {
-                  return <Th>選択肢{i}</Th>
-                }
-              })()}
-              <Th>正答</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {lstQuestionState.map((question, index) => (
-              <Tr key={index}>
-                <Td>
-                  <Text>{question.question}</Text>
-                </Td>
-                <Td>
-                  <Text>
-                    {question.lstSelect.map((select, index) => (
-                      <Text key={index}>{select.label}</Text>
-                    ))}
-                  </Text>
-                </Td>
-                <Td>
-                  <Text>{question.answer}</Text>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      ) : null}
     </div>
   )
 }

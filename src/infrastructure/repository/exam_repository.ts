@@ -10,12 +10,13 @@ import {
   getDoc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from '@firebase/firestore'
 
 export class IExamRepository implements ExamRepository {
-  getExamById(args: { eid: string }): Promise<Exam | null> {
+  getExamByEid(args: { eid: string }): Promise<Exam | null> {
     const docRef = doc(db, master, 'exams', args.eid)
     return new Promise<Exam | null>((resolve, reject) => {
       getDoc(docRef)
@@ -55,12 +56,17 @@ export class IExamRepository implements ExamRepository {
         })
     })
   }
-  createExam(args: { exam: Exam }): Promise<Exam> {
+  regExam(args: { exam: Exam }): Promise<Exam> {
     const colRef = collection(db, master, 'exams')
     const exam = ExamDTO.fromEntity(args.exam).toData()
     return new Promise<Exam>((resolve, reject) => {
       addDoc(colRef, exam)
-        .then(() => {
+        .then((docRef) => {
+          const eid = docRef.id
+          const exam = ExamMapper.toDomain(ExamDTO.fromEntity(args.exam))
+          exam.eid = eid
+          // eidの更新
+          setDoc(docRef, { eid: eid }, { merge: true })
           resolve(args.exam)
         })
         .catch((error) => {
@@ -68,7 +74,7 @@ export class IExamRepository implements ExamRepository {
         })
     })
   }
-  updateExam(args: { exam: Exam }): Promise<Exam> {
+  updExam(args: { exam: Exam }): Promise<Exam> {
     const docRef = doc(db, master, 'exams', args.exam.eid)
     const exam = ExamDTO.fromEntity(args.exam).toData()
     return new Promise<Exam>((resolve, reject) => {
@@ -81,7 +87,7 @@ export class IExamRepository implements ExamRepository {
         })
     })
   }
-  deleteExam(args: { eid: string }): Promise<boolean> {
+  delExam(args: { eid: string }): Promise<boolean> {
     const docRef = doc(db, master, 'exams', args.eid)
     return new Promise<boolean>((resolve, reject) => {
       updateDoc(docRef, {
