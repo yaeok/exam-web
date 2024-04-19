@@ -10,6 +10,7 @@ import {
   Heading,
   HStack,
   Text,
+  VStack,
 } from '@/design'
 
 type ExamCardProps = {
@@ -24,7 +25,7 @@ export default function ExamCard(props: ExamCardProps) {
     console.log('削除ボタンが押されました' + eid)
   }
   const onClickShareBtn = () => {
-    router.push('/home/search')
+    router.push(`/home/${props.eid}`)
   }
   return (
     <Card>
@@ -33,23 +34,35 @@ export default function ExamCard(props: ExamCardProps) {
           <Heading fontStyle='oblique' fontSize='18'>
             {props.title}
           </Heading>
-          <Button colorScheme='red' onClick={() => onClickDelBtn(props.eid)}>
-            削除
-          </Button>
         </HStack>
       </CardHeader>
       <CardBody>
-        <Text color='gray' fontSize='14px'>
-          {props.description}
-        </Text>
+        <VStack>
+          <Text color='gray' fontSize='14px'>
+            {props.description}
+          </Text>
+          <Text color='gray' fontSize='12px' textAlign='end'>
+            作成日時: 2021/09/01
+          </Text>
+        </VStack>
       </CardBody>
       <CardFooter>
         <HStack width='100%' justifyContent='space-between'>
-          <Text color='gray' fontSize='12px'>
-            作成日時: 2021/09/01
-          </Text>
-          <Button colorScheme='blue' onClick={() => onClickShareBtn()}>
+          <Button
+            bg='blue.200'
+            _hover={{ bg: 'blue.300' }}
+            color='white'
+            onClick={() => onClickShareBtn()}
+          >
             共有
+          </Button>
+          <Button
+            bg='red.400'
+            _hover={{ bg: 'red.500' }}
+            color='white'
+            onClick={() => onClickDelBtn(props.eid)}
+          >
+            削除
           </Button>
         </HStack>
       </CardFooter>

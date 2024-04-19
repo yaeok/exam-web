@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react'
 
-import Loading from '@/components/widgets/loading.component'
+import Loading from '@/components/common/loading'
 import { User } from '@/domain/entity/user_entity'
 import { auth } from '@/infrastructure/firestore/config'
 import { IUserRepository } from '@/infrastructure/repository/user_repository'

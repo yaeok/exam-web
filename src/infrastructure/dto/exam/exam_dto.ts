@@ -1,7 +1,6 @@
 import { Exam } from '@/domain/entity/exam_entity'
+import { DataTransferObject } from '@/infrastructure/dto/dto'
 import { DocumentData } from '@firebase/firestore'
-
-import { DataTransferObject } from '../dto'
 
 export class ExamDTO implements DataTransferObject {
   constructor(args: {

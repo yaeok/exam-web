@@ -24,7 +24,7 @@ export default function Header() {
         <Flex
           flex={1}
           justify='space-between'
-          maxW='container.xl'
+          maxW='container.lg'
           mx='auto'
           alignItems='center'
         >
